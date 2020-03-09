@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzh.dao.LabDao">
+  <resultMap id="BaseResultMap" type="com.wzh.bean.Lab">
+    <id column="LAB_ID" jdbcType="SMALLINT" property="labId" />
+    <result column="LAB_NAME" jdbcType="VARCHAR" property="labName" />
+    <result column="LAB_STATE" jdbcType="OTHER" property="labState" />
+    <result column="LAB_ROOM" jdbcType="VARCHAR" property="labRoom" />
+    <result column="LAB_SIZE" jdbcType="TINYINT" property="labSize" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    LAB_ID, LAB_NAME, LAB_STATE, LAB_ROOM, LAB_SIZE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lab
+    where LAB_ID = #{labId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from lab
+    where LAB_ID = #{labId,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" keyColumn="LAB_ID" keyProperty="labId" parameterType="com.wzh.bean.Lab" useGeneratedKeys="true">
+    insert into lab (LAB_NAME, LAB_STATE, LAB_ROOM, 
+      LAB_SIZE)
+    values (#{labName,jdbcType=VARCHAR}, #{labState,jdbcType=OTHER}, #{labRoom,jdbcType=VARCHAR}, 
+      #{labSize,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="LAB_ID" keyProperty="labId" parameterType="com.wzh.bean.Lab" useGeneratedKeys="true">
+    insert into lab
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="labName != null">
+        LAB_NAME,
+      </if>
+      <if test="labState != null">
+        LAB_STATE,
+      </if>
+      <if test="labRoom != null">
+        LAB_ROOM,
+      </if>
+      <if test="labSize != null">
+        LAB_SIZE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="labName != null">
+        #{labName,jdbcType=VARCHAR},
+      </if>
+      <if test="labState != null">
+        #{labState,jdbcType=OTHER},
+      </if>
+      <if test="labRoom != null">
+        #{labRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="labSize != null">
+        #{labSize,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzh.bean.Lab">
+    update lab
+    <set>
+      <if test="labName != null">
+        LAB_NAME = #{labName,jdbcType=VARCHAR},
+      </if>
+      <if test="labState != null">
+        LAB_STATE = #{labState,jdbcType=OTHER},
+      </if>
+      <if test="labRoom != null">
+        LAB_ROOM = #{labRoom,jdbcType=VARCHAR},
+      </if>
+      <if test="labSize != null">
+        LAB_SIZE = #{labSize,jdbcType=TINYINT},
+      </if>
+    </set>
+    where LAB_ID = #{labId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzh.bean.Lab">
+    update lab
+    set LAB_NAME = #{labName,jdbcType=VARCHAR},
+      LAB_STATE = #{labState,jdbcType=OTHER},
+      LAB_ROOM = #{labRoom,jdbcType=VARCHAR},
+      LAB_SIZE = #{labSize,jdbcType=TINYINT}
+    where LAB_ID = #{labId,jdbcType=SMALLINT}
+  </update>
+</mapper>

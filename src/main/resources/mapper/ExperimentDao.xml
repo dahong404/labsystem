@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzh.dao.ExperimentDao">
+  <resultMap id="BaseResultMap" type="com.wzh.bean.Experiment">
+    <id column="EXP_ID" jdbcType="INTEGER" property="expId" />
+    <result column="EXP_NAME" jdbcType="VARCHAR" property="expName" />
+    <result column="EXP_NOTE" jdbcType="VARCHAR" property="expNote" />
+    <result column="EXP_USED" jdbcType="TINYINT" property="expUsed" />
+    <result column="EXP_DATE" jdbcType="TIMESTAMP" property="expDate" />
+    <result column="EXP_SECTION" jdbcType="OTHER" property="expSection" />
+    <result column="lab_id" jdbcType="SMALLINT" property="labId" />
+    <result column="RES_ID" jdbcType="CHAR" property="resId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    EXP_ID, EXP_NAME, EXP_NOTE, EXP_USED, EXP_DATE, EXP_SECTION, lab_id, RES_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from experiment
+    where EXP_ID = #{expId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from experiment
+    where EXP_ID = #{expId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="EXP_ID" keyProperty="expId" parameterType="com.wzh.bean.Experiment" useGeneratedKeys="true">
+    insert into experiment (EXP_NAME, EXP_NOTE, EXP_USED, 
+      EXP_DATE, EXP_SECTION, lab_id, 
+      RES_ID)
+    values (#{expName,jdbcType=VARCHAR}, #{expNote,jdbcType=VARCHAR}, #{expUsed,jdbcType=TINYINT}, 
+      #{expDate,jdbcType=TIMESTAMP}, #{expSection,jdbcType=OTHER}, #{labId,jdbcType=SMALLINT}, 
+      #{resId,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="EXP_ID" keyProperty="expId" parameterType="com.wzh.bean.Experiment" useGeneratedKeys="true">
+    insert into experiment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="expName != null">
+        EXP_NAME,
+      </if>
+      <if test="expNote != null">
+        EXP_NOTE,
+      </if>
+      <if test="expUsed != null">
+        EXP_USED,
+      </if>
+      <if test="expDate != null">
+        EXP_DATE,
+      </if>
+      <if test="expSection != null">
+        EXP_SECTION,
+      </if>
+      <if test="labId != null">
+        lab_id,
+      </if>
+      <if test="resId != null">
+        RES_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="expName != null">
+        #{expName,jdbcType=VARCHAR},
+      </if>
+      <if test="expNote != null">
+        #{expNote,jdbcType=VARCHAR},
+      </if>
+      <if test="expUsed != null">
+        #{expUsed,jdbcType=TINYINT},
+      </if>
+      <if test="expDate != null">
+        #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expSection != null">
+        #{expSection,jdbcType=OTHER},
+      </if>
+      <if test="labId != null">
+        #{labId,jdbcType=SMALLINT},
+      </if>
+      <if test="resId != null">
+        #{resId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzh.bean.Experiment">
+    update experiment
+    <set>
+      <if test="expName != null">
+        EXP_NAME = #{expName,jdbcType=VARCHAR},
+      </if>
+      <if test="expNote != null">
+        EXP_NOTE = #{expNote,jdbcType=VARCHAR},
+      </if>
+      <if test="expUsed != null">
+        EXP_USED = #{expUsed,jdbcType=TINYINT},
+      </if>
+      <if test="expDate != null">
+        EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expSection != null">
+        EXP_SECTION = #{expSection,jdbcType=OTHER},
+      </if>
+      <if test="labId != null">
+        lab_id = #{labId,jdbcType=SMALLINT},
+      </if>
+      <if test="resId != null">
+        RES_ID = #{resId,jdbcType=CHAR},
+      </if>
+    </set>
+    where EXP_ID = #{expId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzh.bean.Experiment">
+    update experiment
+    set EXP_NAME = #{expName,jdbcType=VARCHAR},
+      EXP_NOTE = #{expNote,jdbcType=VARCHAR},
+      EXP_USED = #{expUsed,jdbcType=TINYINT},
+      EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      EXP_SECTION = #{expSection,jdbcType=OTHER},
+      lab_id = #{labId,jdbcType=SMALLINT},
+      RES_ID = #{resId,jdbcType=CHAR}
+    where EXP_ID = #{expId,jdbcType=INTEGER}
+  </update>
+</mapper>

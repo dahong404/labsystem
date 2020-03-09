@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzh.dao.ResearcherDao">
+  <resultMap id="BaseResultMap" type="com.wzh.bean.Researcher">
+    <id column="RES_ID" jdbcType="CHAR" property="resId" />
+    <result column="res_PASSWORD" jdbcType="VARCHAR" property="resPassword" />
+    <result column="RES_NAME" jdbcType="VARCHAR" property="resName" />
+    <result column="RES_TITLE" jdbcType="OTHER" property="resTitle" />
+    <result column="RES_PHONE" jdbcType="CHAR" property="resPhone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    RES_ID, res_PASSWORD, RES_NAME, RES_TITLE, RES_PHONE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from researcher
+    where RES_ID = #{resId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from researcher
+    where RES_ID = #{resId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" keyColumn="RES_ID" keyProperty="resId" parameterType="com.wzh.bean.Researcher" useGeneratedKeys="true">
+    insert into researcher (res_PASSWORD, RES_NAME, RES_TITLE, 
+      RES_PHONE)
+    values (#{resPassword,jdbcType=VARCHAR}, #{resName,jdbcType=VARCHAR}, #{resTitle,jdbcType=OTHER}, 
+      #{resPhone,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="RES_ID" keyProperty="resId" parameterType="com.wzh.bean.Researcher" useGeneratedKeys="true">
+    insert into researcher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="resPassword != null">
+        res_PASSWORD,
+      </if>
+      <if test="resName != null">
+        RES_NAME,
+      </if>
+      <if test="resTitle != null">
+        RES_TITLE,
+      </if>
+      <if test="resPhone != null">
+        RES_PHONE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="resPassword != null">
+        #{resPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="resName != null">
+        #{resName,jdbcType=VARCHAR},
+      </if>
+      <if test="resTitle != null">
+        #{resTitle,jdbcType=OTHER},
+      </if>
+      <if test="resPhone != null">
+        #{resPhone,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzh.bean.Researcher">
+    update researcher
+    <set>
+      <if test="resPassword != null">
+        res_PASSWORD = #{resPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="resName != null">
+        RES_NAME = #{resName,jdbcType=VARCHAR},
+      </if>
+      <if test="resTitle != null">
+        RES_TITLE = #{resTitle,jdbcType=OTHER},
+      </if>
+      <if test="resPhone != null">
+        RES_PHONE = #{resPhone,jdbcType=CHAR},
+      </if>
+    </set>
+    where RES_ID = #{resId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzh.bean.Researcher">
+    update researcher
+    set res_PASSWORD = #{resPassword,jdbcType=VARCHAR},
+      RES_NAME = #{resName,jdbcType=VARCHAR},
+      RES_TITLE = #{resTitle,jdbcType=OTHER},
+      RES_PHONE = #{resPhone,jdbcType=CHAR}
+    where RES_ID = #{resId,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzh.dao.SysadminDao">
+  <resultMap id="BaseResultMap" type="com.wzh.bean.Sysadmin">
+    <id column="SA_ID" jdbcType="CHAR" property="saId" />
+    <result column="sa_PASSWORD" jdbcType="VARCHAR" property="saPassword" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SA_ID, sa_PASSWORD
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sysadmin
+    where SA_ID = #{saId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sysadmin
+    where SA_ID = #{saId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" keyColumn="SA_ID" keyProperty="saId" parameterType="com.wzh.bean.Sysadmin" useGeneratedKeys="true">
+    insert into sysadmin (sa_PASSWORD)
+    values (#{saPassword,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="SA_ID" keyProperty="saId" parameterType="com.wzh.bean.Sysadmin" useGeneratedKeys="true">
+    insert into sysadmin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="saPassword != null">
+        sa_PASSWORD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="saPassword != null">
+        #{saPassword,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzh.bean.Sysadmin">
+    update sysadmin
+    <set>
+      <if test="saPassword != null">
+        sa_PASSWORD = #{saPassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SA_ID = #{saId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzh.bean.Sysadmin">
+    update sysadmin
+    set sa_PASSWORD = #{saPassword,jdbcType=VARCHAR}
+    where SA_ID = #{saId,jdbcType=CHAR}
+  </update>
+</mapper>
